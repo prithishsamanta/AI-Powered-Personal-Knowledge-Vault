@@ -1,54 +1,87 @@
-.signup-container {
+.signup-page {
   min-height: 100vh;
   width: 100vw;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  background-color: #f3f4f6;
+  background-color: #f8fafc;
   margin: 0;
-  padding: 0;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   box-sizing: border-box;
+}
+
+.signup-content {
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.main-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.app-description {
+  font-size: 1.1rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 400px;
 }
 
 .signup-card {
   background-color: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   width: 100%;
-  max-width: 26rem;
+  max-width: 400px;
   box-sizing: border-box;
 }
 
-.signup-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+.signup-card-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #334155;
+  margin: 0 0 1.5rem 0;
   text-align: center;
-  margin-bottom: 1.5rem;
-  color: #1f2937;
 }
 
 .signup-form {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .form-label {
-  display: block;
-  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  color: #374151;
+  color: #475569;
+  text-align: left;
+  margin-bottom: 0.125rem;
 }
 
 .form-input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.375rem;
-  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.15s ease-in-out;
+  transition: all 0.2s ease-in-out;
   box-sizing: border-box;
+  background-color: #ffffff;
 }
 
 .form-input:focus {
@@ -58,50 +91,88 @@
 }
 
 .form-input::placeholder {
-  color: #9ca3af;
-}
-
-.confirm-password-input {
-  margin-bottom: 1.5rem;
+  color: #94a3b8;
 }
 
 .signup-button {
   width: 100%;
   background-color: #059669;
   color: white;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   border: none;
-  border-radius: 0.375rem;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.15s ease-in-out;
+  transition: all 0.2s ease-in-out;
   box-sizing: border-box;
+  margin-top: 0.5rem;
 }
 
 .signup-button:hover {
   background-color: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
 }
 
-.signup-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.3);
+.signup-button:active {
+  transform: translateY(0);
 }
 
-.login-link-container {
-  font-size: 0.875rem;
+.login-prompt {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0;
   text-align: center;
-  margin-top: 1rem;
-  color: #6b7280;
 }
 
 .login-link {
-  color: #2563eb;
+  color: #3b82f6;
   text-decoration: none;
-  transition: color 0.15s ease-in-out;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
 }
 
 .login-link:hover {
-  color: #1d4ed8;
+  color: #2563eb;
   text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .signup-page {
+    padding: 1rem;
+  }
+  
+  .main-heading {
+    font-size: 2rem;
+  }
+  
+  .app-description {
+    font-size: 1rem;
+  }
+  
+  .signup-card {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .signup-content {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-heading {
+    font-size: 1.75rem;
+  }
+  
+  .signup-card {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 } 
