@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AddVaultModal from '../components/AddVaultModal';
 import '../styles/Home.css';
 
 function Home() {
+  const navigate = useNavigate();
   const [userName] = useState("John Doe"); // This would come from user data
   const [vaults, setVaults] = useState([
     { id: 1, title: "Personal Notes", description: "Daily thoughts and ideas", lastModified: "2 days ago" },
@@ -16,8 +18,8 @@ function Home() {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const handleCardClick = (vaultId) => {
-    // Open vault in new tab/window
-    window.open(`/vault/${vaultId}`, '_blank');
+    // Navigate to vault page
+    navigate(`/vault/${vaultId}`);
   };
 
   const handleDeleteVault = (vaultId) => {
