@@ -1,5 +1,5 @@
-// src/pages/Home.jsx
 import { useState } from 'react';
+import AddVaultModal from '../components/AddVaultModal';
 import '../styles/Home.css';
 
 function Home() {
@@ -13,6 +13,7 @@ function Home() {
   ]);
 
   const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleCardClick = (vaultId) => {
     // Open vault in new tab/window
@@ -24,11 +25,19 @@ function Home() {
     setDropdownOpen(null);
   };
 
-  const handleCreateVault = () => {
+  const handleShowAddModal = () => {
+    setShowAddModal(true);
+  };
+
+  const handleCloseAddModal = () => {
+    setShowAddModal(false);
+  };
+
+  const handleCreateVault = (vaultData) => {
     const newVault = {
       id: Date.now(),
-      title: "New Vault",
-      description: "Click to add description",
+      title: vaultData.title,
+      description: vaultData.description,
       lastModified: "Just now"
     };
     setVaults([...vaults, newVault]);
@@ -83,22 +92,21 @@ function Home() {
             </div>
           ))}
           
-          {/* Empty placeholder cards to fill the grid */}
-          {/* {Array.from({ length: Math.max(0, 8 - vaults.length) }).map((_, index) => (
-            <div key={`empty-${index}`} className="vault-card empty-card">
-              <div className="empty-content">
-                <span className="empty-text">Empty Slot</span>
-              </div>
-            </div>
-          ))} */}
+          
         </div>
 
-        <button className="floating-add-button" onClick={handleCreateVault}>
+        <button className="floating-add-button" onClick={handleShowAddModal}>
           +
         </button>
+
+        <AddVaultModal
+          isOpen={showAddModal}
+          onClose={handleCloseAddModal}
+          onCreateVault={handleCreateVault}
+        />
       </div>
     </div>
   );
 }
 
-export default Home;
+export default Home; 
