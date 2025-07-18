@@ -1,7 +1,102 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Signup.css';
 
 function Signup() {
+  // State management for form fields
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  
+  // State for handling loading and error states
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  
+  // For navigation after successful signup
+  const navigate = useNavigate();
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Clear error when user starts typing
+    if (error) setError('');
+  };
+
+  // Form validation
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      setError('Full name is required');
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError('Email is required');
+      return false;
+    }
+    if (!formData.password) {
+      setError('Password is required');
+      return false;
+    }
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return false;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return false;
+    }
+    return true;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      // API call to backend
+      const response = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+
+      // Success! Show success message and redirect
+      setSuccess('Account created successfully! Redirecting to login...');
+      setTimeout(() => {
+        navigate('/'); // Redirect to login page
+      }, 2000);
+
+    } catch (err) {
+      setError(err.message || 'An error occurred during registration');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="signup-page">
       <div className="signup-content">
@@ -14,37 +109,63 @@ function Signup() {
         <div className="signup-card">
           <h1 className="signup-card-title">Sign Up</h1>
           
-          <form className="signup-form">
+          {/* Error message display */}
+          {error && <div className="error-message">{error}</div>}
+          
+          {/* Success message display */}
+          {success && <div className="success-message">{success}</div>}
+          
+          <form className="signup-form" onSubmit={handleSubmit}>
             <label className="form-label">Full Name</label>
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               placeholder="Enter your full name"
               className="form-input"
+              disabled={isLoading}
             />
             
             <label className="form-label">Email</label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Enter your email"
               className="form-input"
+              disabled={isLoading}
             />
             
             <label className="form-label">Password</label>
             <input
               type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="Enter your password"
               className="form-input"
+              disabled={isLoading}
             />
             
             <label className="form-label">Confirm Password</label>
             <input
               type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
               placeholder="Confirm your password"
               className="form-input"
+              disabled={isLoading}
             />
 
-            <button type="submit" className="signup-button">
-              Sign Up
+            <button 
+              type="submit" 
+              className="signup-button"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Creating Account...' : 'Sign Up'}
             </button>
           </form>
 

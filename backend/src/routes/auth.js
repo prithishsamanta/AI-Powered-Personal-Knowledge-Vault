@@ -8,7 +8,7 @@ const router = express.Router();
 
 // POST /api/auth/signup
 router.post('/signup', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, email, password } = req.body;
 
   try {
     // Check if user already exists
@@ -17,13 +17,17 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ message: 'User already exists with this email' });
     }
 
+    // if(password !== repassword) {
+    //   return res.status(400).json({ message: 'Your passwords don\'t match' });
+    // }
+
     // Hash password
     const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Create new user
     const newUser = new User({
-      username,
+      name,
       email,
       password: hashedPassword
     });
@@ -42,7 +46,7 @@ router.post('/signup', async (req, res) => {
       token,
       user: {
         id: newUser._id,
-        username: newUser.username,
+        name: newUser.name,
         email: newUser.email
       }
     });
@@ -74,7 +78,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: '1h' }
     );
 
     res.json({
@@ -82,7 +86,7 @@ router.post('/login', async (req, res) => {
       token,
       user: {
         id: user._id,
-        username: user.username,
+        name: user.name,
         email: user.email
       }
     });
