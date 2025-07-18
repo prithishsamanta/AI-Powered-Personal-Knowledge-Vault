@@ -169,4 +169,46 @@
   .login-card {
     padding: 1.5rem;
   }
+}
+
+/* Error and Success Message Styles */
+.error-message {
+  background-color: #fee;
+  color: #c33;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #fcc;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.success-message {
+  background-color: #efe;
+  color: #059669;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #cfc;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Disabled States */
+.form-input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.login-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.login-button:disabled:hover {
+  background-color: #ccc;
+  transform: none;
+  box-shadow: none;
 } 
