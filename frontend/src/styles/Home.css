@@ -1,5 +1,5 @@
 .home-page {
-  min-height: 100vh;
+    min-height: 100vh;
   width: 100vw;
   background-color: #f8fafc;
   margin: 0;
@@ -11,9 +11,9 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  position: relative;
-}
-
+    position: relative;
+  }
+  
 .home-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -22,11 +22,11 @@
 
 .welcome-message {
   font-size: 2.5rem;
-  font-weight: bold;
+    font-weight: bold;
   color: #1e293b;
   margin: 0 0 1rem 0;
-}
-
+  }
+  
 .intro-text {
   font-size: 1.1rem;
   color: #64748b;
@@ -35,15 +35,15 @@
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-}
-
+  }
+  
 .vaults-grid {
-  display: grid;
+    display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
-}
-
+  }
+  
 .vault-card {
   background-color: white;
   border-radius: 12px;
@@ -52,7 +52,7 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   border: 2px solid transparent;
-  position: relative;
+    position: relative;
   height: 180px;
   display: flex;
   flex-direction: column;
@@ -62,8 +62,8 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.15);
   border-color: #e2e8f0;
-}
-
+  }
+  
 .empty-card {
   background-color: #f8fafc;
   border: 2px dashed #cbd5e1;
@@ -95,8 +95,8 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 0.75rem;
-}
-
+  }
+  
 .vault-title {
   font-size: 1rem;
   font-weight: 600;
@@ -136,7 +136,7 @@
 }
 
 .dropdown-menu {
-  position: absolute;
+    position: absolute;
   top: 100%;
   right: 0;
   background-color: white;
@@ -158,8 +158,8 @@
   cursor: pointer;
   font-size: 0.9rem;
   transition: background-color 0.2s ease-in-out;
-}
-
+  }
+  
 .dropdown-item:hover {
   background-color: #f8fafc;
 }
@@ -193,26 +193,26 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.025em;
-}
-
+  }
+  
 .floating-add-button {
-  position: fixed;
+    position: fixed;
   bottom: 5rem;
   right: 5rem;
   width: 50px;
   height: 50px;
   background-color: #3b82f6;
-  color: white;
+    color: white;
   border: none;
-  border-radius: 50%;
+    border-radius: 50%;
   font-size: 1.5rem;
   font-weight: 300;
   cursor: pointer;
   box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
   transition: all 0.2s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   z-index: 100;
   line-height: 1;
 }
@@ -221,7 +221,7 @@
   background-color: #2563eb;
   transform: translateY(-2px);
   box-shadow: 0 15px 35px -5px rgba(59, 130, 246, 0.5);
-}
+  }
 
 .floating-add-button:active {
   transform: translateY(0);

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
+import { authAPI } from '../services/api';
 
 function Login() {
 
@@ -53,23 +54,13 @@ function Login() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password
-        })
+      const data = await authAPI.login({
+        email: formData.email,
+        password: formData.password
       });
 
-      if(!response.ok){
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
-      }
-
-      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
 
       setSuccess('Login successful! Redirecting to dashboard...');
       setTimeout(() => {
@@ -99,6 +90,7 @@ function Login() {
             <label className="form-label">Email</label>
             <input
               type="email"
+              name="email"
               placeholder="Enter your email"
               className="form-input"
               value={formData.email}
@@ -108,6 +100,7 @@ function Login() {
             <label className="form-label">Password</label>
             <input
               type="password"
+              name="password"
               placeholder="Enter your password"
               className="form-input"
               value={formData.password}

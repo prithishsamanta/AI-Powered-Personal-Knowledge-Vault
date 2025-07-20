@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Signup.css';
+import { authAPI } from '../services/api';
 
 function Signup() {
   // State management for form fields
@@ -66,23 +67,11 @@ function Signup() {
     
     try {
       // API call to backend
-      const response = await fetch('http://localhost:5000/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password
-        })
+      const data = await authAPI.signup({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
-      }
 
       // Success! Show success message and redirect
       setSuccess('Account created successfully! Redirecting to login...');

@@ -82,6 +82,7 @@
   transition: all 0.2s ease-in-out;
   box-sizing: border-box;
   background-color: #ffffff;
+  color: #1e293b;
 }
 
 .form-input:focus {
