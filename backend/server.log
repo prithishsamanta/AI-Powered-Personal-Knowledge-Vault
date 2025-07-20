@@ -1,0 +1,3 @@
+[dotenv@17.0.1] injecting env (3) from .env – [tip] encrypt with dotenvx: https://dotenvx.com
+🚀 Server running on port 5000 (NO DATABASE MODE)
+📝 Test at: http://localhost:5000/api/test

@@ -106,9 +106,9 @@ function Home() {
           onClose={handleCloseAddModal}
           onCreateVault={handleCreateVault}
         />
-      </div>
+    </div>
     </div>
   );
 }
 
-export default Home; 
+export default Home;
