@@ -64,7 +64,7 @@ function Login() {
 
       setSuccess('Login successful! Redirecting to dashboard...');
       setTimeout(() => {
-        navigate('/dashboard');
+        navigate('/home');
       }, 2000);
 
     } catch (error) {
