@@ -62,7 +62,7 @@ function Login() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      setSuccess('Login successful! Redirecting to dashboard...');
+      setSuccess('Login successful! Redirecting to home...');
       setTimeout(() => {
         navigate('/home');
       }, 2000);

@@ -306,4 +306,43 @@
   .last-modified {
     font-size: 0.7rem;
   }
+}
+
+/* Error and Success Message Styles */
+.error-message {
+  background-color: #fee;
+  color: #c33;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.success-message {
+  background-color: #efe;
+  color: #059669;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.loading-message {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+.no-vaults-message {
+  text-align: center;
+  padding: 60px 20px;
+  color: #64748b;
+}
+
+.no-vaults-message p {
+  font-size: 1.1rem;
+  margin: 0;
 } 

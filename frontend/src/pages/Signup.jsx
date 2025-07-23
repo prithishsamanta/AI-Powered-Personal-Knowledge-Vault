@@ -73,10 +73,14 @@ function Signup() {
         password: formData.password
       });
 
-      // Success! Show success message and redirect
-      setSuccess('Account created successfully! Redirecting to login...');
+      // Store token and user data
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // Success! Show success message and redirect to home
+      setSuccess('Account created successfully! Redirecting to home...');
       setTimeout(() => {
-        navigate('/'); // Redirect to login page
+        navigate('/home'); // Redirect to home page
       }, 2000);
 
     } catch (err) {
