@@ -49,10 +49,12 @@ const createVault = async (req, res) => {
     res.status(201).json({
       message: 'Vault created successfully',
       vault: {
-        id: newVault._id,
+        _id: newVault._id,
         title: newVault.title,
         description: newVault.description,
-        lastModified: newVault.updatedAt
+        notes: newVault.notes || "",
+        summary: newVault.summary || "",
+        updatedAt: newVault.updatedAt
       }
     });
 
@@ -85,12 +87,12 @@ const updateVault = async (req, res) => {
     res.json({
       message: 'Vault updated successfully',
       vault: {
-        id: vault._id,
+        _id: vault._id,
         title: vault.title,
         description: vault.description,
         notes: vault.notes,
         summary: vault.summary,
-        lastModified: vault.updatedAt
+        updatedAt: vault.updatedAt
       }
     });
 

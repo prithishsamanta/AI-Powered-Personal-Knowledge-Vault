@@ -38,8 +38,15 @@ function Home() {
         const vaultsData = await vaultAPI.getVaults();
         setVaults(vaultsData);
       } catch (error) {
-        setError(error.message || 'Failed to load vaults');
         console.error('Error loading vaults:', error);
+        setError(error.message || 'Failed to load vaults');
+        
+        // If authentication error, redirect to login
+        if (error.message.includes('authentication') || error.message.includes('token')) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          navigate('/');
+        }
       } finally {
         setIsLoading(false);
       }
@@ -75,18 +82,23 @@ function Home() {
     setSuccess(''); // Clear any success messages
   };
 
-  // ← Already updated, just adding better error handling
   const handleCreateVault = async (vaultData) => {
     try {
-      setIsLoading(true);
+      setError(''); // Clear any previous errors
       const response = await vaultAPI.createVault(vaultData);
-      setVaults([response.vault, ...vaults]); // ← Add to beginning
+      setVaults([response.vault, ...vaults]);
       setSuccess('Vault created successfully');
       setShowAddModal(false);
     } catch (error) {
+      console.error('Create vault error:', error);
       setError(error.message || 'Failed to create vault');
-    } finally {
-      setIsLoading(false);
+      
+      // If authentication error, redirect to login
+      if (error.message.includes('authentication') || error.message.includes('token')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        navigate('/');
+      }
     }
   };
 
