@@ -37,6 +37,10 @@ export const authAPI = {
 export const vaultAPI = {
   createVault: async (vaultData) => {
     const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found. Please login again.');
+    }
+    
     const response = await fetch(`${API_BASE_URL}/vaults`, {
       method: 'POST',
       headers: { 
@@ -46,17 +50,29 @@ export const vaultAPI = {
       body: JSON.stringify(vaultData)
     });
     
-    if (!response.ok) throw new Error('Failed to create vault');
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to create vault');
+    }
+    
     return response.json();
   },
 
   getVaults: async () => {
     const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found. Please login again.');
+    }
+    
     const response = await fetch(`${API_BASE_URL}/vaults`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
-    if (!response.ok) throw new Error('Failed to fetch vaults');
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to fetch vaults');
+    }
+    
     return response.json();
   },
 
@@ -72,24 +88,43 @@ export const vaultAPI = {
 
   updateVault: async (id, vaultData) => {
     const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found. Please login again.');
+    }
+    
     const response = await fetch(`${API_BASE_URL}/vaults/${id}`, {
       method: 'PUT',
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      headers: { 
+        'Authorization': `Bearer ${token}`, 
+        'Content-Type': 'application/json' 
+      },
       body: JSON.stringify(vaultData)
     });
     
-    if (!response.ok) throw new Error('Failed to update vault');
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update vault');
+    }
+    
     return response.json();
   },
 
   deleteVault: async (id) => {
     const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found. Please login again.');
+    }
+    
     const response = await fetch(`${API_BASE_URL}/vaults/${id}`, {
       method: 'DELETE',
       headers: { 'Authorization': `Bearer ${token}` }
     });
     
-    if (!response.ok) throw new Error('Failed to delete vault');
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to delete vault');
+    }
+    
     return response.json();
   }
 };
