@@ -61,7 +61,12 @@ export const vaultAPI = {
   },
 
   getVaultById: async (id) => { 
-    const response = await fetch(`${API_BASE_URL}/vaults/${id}`);
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE_URL}/vaults/${id}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    
+    if (!response.ok) throw new Error('Failed to fetch vault');
     return response.json();
   },
 
