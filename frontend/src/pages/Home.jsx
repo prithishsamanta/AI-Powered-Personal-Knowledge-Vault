@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddVaultModal from '../components/AddVaultModal';
+import LogoutButton from '../components/LogoutButton';
 import { vaultAPI } from '../services/api';  // ← Import vaultAPI
 import '../styles/Home.css';
 
@@ -130,6 +131,7 @@ function Home() {
 
   return (
     <div className="home-page">
+      <LogoutButton />
       <div className="home-content">
         <header className="home-header">
           <h1 className="welcome-message">Hi {userName}!</h1>
