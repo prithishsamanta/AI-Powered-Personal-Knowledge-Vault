@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AddVaultModal from '../components/AddVaultModal';
-import LogoutButton from '../components/LogoutButton';
 import { vaultAPI } from '../services/api';  // ← Import vaultAPI
 import '../styles/Home.css';
 
@@ -58,10 +57,9 @@ function Home() {
   }, [navigate]);
 
   const handleCardClick = async (vaultId) => {
-    try{
+    try {
       navigate(`/vault/${vaultId}`);
-    }
-    catch(error){
+    } catch (error) {
       console.error('Error loading vault:', error);
       setError(error.message || 'Failed to load vault');
     }
@@ -109,6 +107,15 @@ function Home() {
     }
   };
 
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    
+    // Redirect to login page
+    navigate('/');
+  };
+
   const toggleDropdown = (vaultId, e) => {
     e.stopPropagation();
     setDropdownOpen(dropdownOpen === vaultId ? null : vaultId);
@@ -131,12 +138,19 @@ function Home() {
 
   return (
     <div className="home-page">
-      <LogoutButton />
       <div className="home-content">
         <header className="home-header">
-          <h1 className="welcome-message">Hi {userName}!</h1>
-          <p className="intro-text">Welcome back to your Personal Knowledge Vault. Organize and access all your important information in one secure place.</p>
+          <div className="home-header-top">
+            <div className="home-welcome">
+              <h1 className="welcome-message">Hi {userName}!</h1>
+              <p className="intro-text">Welcome back to your Personal Knowledge Vault. Organize and access all your important information in one secure place.</p>
+            </div>
+            <button className="home-logout-button" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         </header>
+        
 
         {/* ← Error/Success Messages */}
         {error && <div className="error-message">{error}</div>}
@@ -146,7 +160,7 @@ function Home() {
         {isLoading ? (
           <div className="loading-message">Loading your vaults...</div>
         ) : (
-          <div className="vaults-grid">
+          <div className={`vaults-grid ${vaults.length === 1 ? 'single-vault' : ''}`}>
             {vaults.length === 0 ? (
               <div className="no-vaults-message">
                 <p>No vaults yet. Create your first vault to get started!</p>

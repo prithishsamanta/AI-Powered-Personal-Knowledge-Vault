@@ -15,17 +15,29 @@
   }
   
 .home-header {
-  text-align: center;
-  margin-bottom: 3rem;
-  margin-top: 3rem;
+  margin-bottom: 2.5rem;
+  margin-top: 2rem;
+}
+
+.home-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.home-welcome {
+  text-align: left;
+  flex: 1;
 }
 
 .welcome-message {
   font-size: 2.5rem;
-    font-weight: bold;
+  font-weight: bold;
   color: #1e293b;
-  margin: 0 0 1rem 0;
-  }
+  margin: 0 0 0.75rem 0;
+}
   
 .intro-text {
   font-size: 1.1rem;
@@ -33,16 +45,56 @@
   line-height: 1.6;
   margin: 0;
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  }
+}
+
+.home-logout-button {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  white-space: nowrap;
+}
+
+.home-logout-button:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.home-logout-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
   
 .vaults-grid {
     display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Better layout for single vault */
+@supports selector(:has(*)) {
+  .vaults-grid:has(.vault-card:only-child) {
+    grid-template-columns: 1fr;
+    max-width: 420px;
   }
+}
+
+/* Fallback for single vault (manual class) */
+.vaults-grid.single-vault {
+  grid-template-columns: 1fr;
+  max-width: 420px;
+}
   
 .vault-card {
   background-color: white;
@@ -264,6 +316,17 @@
     padding: 1rem;
   }
   
+  .home-header-top {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .home-welcome {
+    width: 100%;
+    text-align: center;
+  }
+  
   .welcome-message {
     font-size: 2rem;
   }
@@ -287,6 +350,11 @@
 }
 
 @media (max-width: 480px) {
+  .home-logout-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+  
   .welcome-message {
     font-size: 1.75rem;
   }

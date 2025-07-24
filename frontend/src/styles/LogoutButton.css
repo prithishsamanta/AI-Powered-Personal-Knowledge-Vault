@@ -1,18 +1,14 @@
-/* Logout Container - Positioned in top right */
+/* Logout Container - Inline in vault header */
 .logout-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
   display: flex;
   align-items: center;
   gap: 12px;
-  z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
   padding: 8px 16px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.6);
 }
 
 /* User Greeting Text */
@@ -61,8 +57,6 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .logout-container {
-    top: 15px;
-    right: 15px;
     padding: 6px 12px;
     gap: 8px;
   }
