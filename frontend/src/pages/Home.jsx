@@ -56,8 +56,14 @@ function Home() {
     loadVaults();
   }, [navigate]);
 
-  const handleCardClick = (vaultId) => {
-    navigate(`/vault/${vaultId}`);
+  const handleCardClick = async (vaultId) => {
+    try{
+      navigate(`/vault/${vaultId}`);
+    }
+    catch(error){
+      console.error('Error loading vault:', error);
+      setError(error.message || 'Failed to load vault');
+    }
   };
 
   // ← Updated to call API
