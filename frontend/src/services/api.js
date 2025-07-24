@@ -126,5 +126,27 @@ export const vaultAPI = {
     }
     
     return response.json();
+  },
+
+  generateSummary: async (id) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found. Please login again.');
+    }
+    
+    const response = await fetch(`${API_BASE_URL}/vaults/${id}/generate-summary`, {
+      method: 'POST',
+      headers: { 
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to generate summary');
+    }
+    
+    return response.json();
   }
 };

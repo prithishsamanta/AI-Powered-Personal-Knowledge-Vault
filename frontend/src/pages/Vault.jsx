@@ -93,36 +93,22 @@ function Vault() {
     setError('');
     
     try {
-      // Generate mock summary (replace with actual AI API call later)
-      const generatedSummary = generateMockSummary(notes);
-      setSummary(generatedSummary);
+      // Call the OpenAI API to generate summary
+      const response = await vaultAPI.generateSummary(vaultId);
+      const generatedSummary = response.summary;
       
-      // Save summary to database
-      await vaultAPI.updateVault(vaultId, { summary: generatedSummary });
-      console.log('Summary saved successfully');
+      setSummary(generatedSummary);
+      console.log('AI Summary generated and saved successfully');
       
     } catch (error) {
-      console.error('Error generating/saving summary:', error);
-      setError('Failed to generate summary');
+      console.error('Error generating summary:', error);
+      setError(error.message || 'Failed to generate summary. Please try again.');
     } finally {
       setIsGeneratingSummary(false);
     }
   };
 
-  const generateMockSummary = (text) => {
-    // Simple mock summary generation
-    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
-    const wordCount = text.split(/\s+/).length;
-    
-    return `Summary (${wordCount} words, ${sentences.length} sentences):
 
-Key Points:
-• This content covers ${sentences.length} main topics
-• Contains approximately ${wordCount} words
-• ${sentences.length > 3 ? 'Multiple ideas discussed' : 'Focused discussion'}
-
-Main themes identified from your notes. This is a simplified summary - in a real application, this would use AI to generate meaningful summaries.`;
-  };
 
   const handleBackToHome = () => {
     navigate('/home');
@@ -275,7 +261,7 @@ Main themes identified from your notes. This is a simplified summary - in a real
             {isGeneratingSummary ? (
               <div className="summary-loading">
                 <div className="loading-spinner"></div>
-                <p>Analyzing your notes and generating summary...</p>
+                <p>🤖 AI is analyzing your notes and generating summary...</p>
               </div>
             ) : summary ? (
               <div className="summary-content">
@@ -283,7 +269,7 @@ Main themes identified from your notes. This is a simplified summary - in a real
               </div>
             ) : (
               <div className="summary-placeholder">
-                <p>No summary generated yet. Write some notes and click "Generate Summary" to get an AI-powered summary of your content.</p>
+                <p>💡 No summary generated yet. Write some notes and click "Generate Summary" to get an AI-powered summary using OpenAI GPT-3.5 Turbo!</p>
               </div>
             )}
           </div>
