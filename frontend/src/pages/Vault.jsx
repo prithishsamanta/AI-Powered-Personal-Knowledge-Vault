@@ -132,12 +132,27 @@ Main themes identified from your notes. This is a simplified summary - in a real
   if (isLoading) {
     return (
       <div className="vault-page">
-        <LogoutButton />
-        <div className="vault-loading">
-          <h2>Loading vault...</h2>
-          <button className="back-button" onClick={handleBackToHome}>
-            ← Back to Home
-          </button>
+        <div className="vault-container">
+          <header className="vault-header">
+            <div className="vault-header-content">
+              <div className="vault-header-left">
+                <button className="back-button" onClick={handleBackToHome}>
+                  ← Back to Home
+                </button>
+                <div className="vault-info">
+                  <h1 className="vault-title">Loading...</h1>
+                  <p className="vault-description">Please wait while we load your vault</p>
+                </div>
+              </div>
+              <div className="vault-header-right">
+                <LogoutButton />
+              </div>
+            </div>
+          </header>
+          
+          <div className="vault-loading">
+            <h2>Loading vault...</h2>
+          </div>
         </div>
       </div>
     );
@@ -147,13 +162,28 @@ Main themes identified from your notes. This is a simplified summary - in a real
   if (error && !vaultData) {
     return (
       <div className="vault-page">
-        <LogoutButton />
-        <div className="vault-loading">
-          <h2>Error Loading Vault</h2>
-          <p className="error-message">{error}</p>
-          <button className="back-button" onClick={handleBackToHome}>
-            ← Back to Home
-          </button>
+        <div className="vault-container">
+          <header className="vault-header">
+            <div className="vault-header-content">
+              <div className="vault-header-left">
+                <button className="back-button" onClick={handleBackToHome}>
+                  ← Back to Home
+                </button>
+                <div className="vault-info">
+                  <h1 className="vault-title">Error Loading Vault</h1>
+                  <p className="vault-description">Unable to load vault data</p>
+                </div>
+              </div>
+              <div className="vault-header-right">
+                <LogoutButton />
+              </div>
+            </div>
+          </header>
+          
+          <div className="vault-loading">
+            <h2>Error Loading Vault</h2>
+            <p className="error-message">{error}</p>
+          </div>
         </div>
       </div>
     );
@@ -163,12 +193,27 @@ Main themes identified from your notes. This is a simplified summary - in a real
   if (!vaultData) {
     return (
       <div className="vault-page">
-        <LogoutButton />
-        <div className="vault-loading">
-          <h2>Vault not found</h2>
-          <button className="back-button" onClick={handleBackToHome}>
-            ← Back to Home
-          </button>
+        <div className="vault-container">
+          <header className="vault-header">
+            <div className="vault-header-content">
+              <div className="vault-header-left">
+                <button className="back-button" onClick={handleBackToHome}>
+                  ← Back to Home
+                </button>
+                <div className="vault-info">
+                  <h1 className="vault-title">Vault Not Found</h1>
+                  <p className="vault-description">The requested vault does not exist</p>
+                </div>
+              </div>
+              <div className="vault-header-right">
+                <LogoutButton />
+              </div>
+            </div>
+          </header>
+          
+          <div className="vault-loading">
+            <h2>Vault not found</h2>
+          </div>
         </div>
       </div>
     );
@@ -176,16 +221,20 @@ Main themes identified from your notes. This is a simplified summary - in a real
 
   return (
     <div className="vault-page">
-      <LogoutButton />
       <div className="vault-container">
         <header className="vault-header">
           <div className="vault-header-content">
-            <button className="back-button" onClick={handleBackToHome}>
-              ← Back to Home
-            </button>
-            <div className="vault-info">
-              <h1 className="vault-title">{vaultData.title}</h1>
-              <p className="vault-description">{vaultData.description}</p>
+            <div className="vault-header-left">
+              <button className="back-button" onClick={handleBackToHome}>
+                ← Back to Home
+              </button>
+              <div className="vault-info">
+                <h1 className="vault-title">{vaultData.title}</h1>
+                <p className="vault-description">{vaultData.description}</p>
+              </div>
+            </div>
+            <div className="vault-header-right">
+              <LogoutButton />
             </div>
           </div>
         </header>
