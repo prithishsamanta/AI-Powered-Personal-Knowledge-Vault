@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { vaultAPI } from '../services/api';
 import '../styles/Vault.css';
 
 function Vault() {
@@ -10,34 +11,75 @@ function Vault() {
   const [notes, setNotes] = useState('');
   const [summary, setSummary] = useState('');
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [autoSaveTimeout, setAutoSaveTimeout] = useState(null);
 
-  // Mock vault data - in real app this would come from API
-  const mockVaults = {
-    "1": { title: "Personal Notes", description: "Daily thoughts and ideas" },
-    "2": { title: "Work Projects", description: "Project documentation" },
-    "3": { title: "Learning Resources", description: "Study materials and courses" },
-    "4": { title: "Recipes", description: "Favorite cooking recipes" },
-    "5": { title: "Travel Plans", description: "Trip itineraries and memories" },
-  };
-
+  // Load vault data from API
   useEffect(() => {
-    // Simulate loading vault data
-    const vault = mockVaults[vaultId];
-    if (vault) {
-      setVaultData(vault);
-      // Load saved notes from localStorage (in real app, this would be from database)
-      const savedNotes = localStorage.getItem(`vault-${vaultId}-notes`) || '';
-      const savedSummary = localStorage.getItem(`vault-${vaultId}-summary`) || '';
-      setNotes(savedNotes);
-      setSummary(savedSummary);
-    }
-  }, [vaultId]);
+    const loadVault = async () => {
+      if (!vaultId) {
+        setError('No vault ID provided');
+        setIsLoading(false);
+        return;
+      }
 
-  const handleNotesChange = (e) => {
+      try {
+        setIsLoading(true);
+        setError('');
+        const vault = await vaultAPI.getVaultById(vaultId);
+        setVaultData(vault);
+        setNotes(vault.notes || '');
+        setSummary(vault.summary || '');
+      } catch (error) {
+        console.error('Error loading vault:', error);
+        setError(error.message || 'Failed to load vault');
+        
+        // If authentication error, redirect to login
+        if (error.message.includes('authentication') || error.message.includes('token')) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          navigate('/');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadVault();
+  }, [vaultId, navigate]);
+
+  // Cleanup auto-save timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (autoSaveTimeout) {
+        clearTimeout(autoSaveTimeout);
+      }
+    };
+  }, [autoSaveTimeout]);
+
+  const handleNotesChange = async (e) => {
     const newNotes = e.target.value;
     setNotes(newNotes);
-    // Auto-save notes
-    localStorage.setItem(`vault-${vaultId}-notes`, newNotes);
+    
+    // Auto-save notes to API (with debouncing)
+    if (autoSaveTimeout) {
+      clearTimeout(autoSaveTimeout);
+    }
+    
+    setAutoSaveTimeout(setTimeout(async () => {
+      try {
+        setIsSaving(true);
+        await vaultAPI.updateVault(vaultId, { notes: newNotes });
+        console.log('Notes saved successfully');
+      } catch (error) {
+        console.error('Error saving notes:', error);
+        setError('Failed to save notes');
+      } finally {
+        setIsSaving(false);
+      }
+    }, 1000)); // Save after 1 second of no typing
   };
 
   const handleGenerateSummary = async () => {
@@ -47,14 +89,23 @@ function Vault() {
     }
 
     setIsGeneratingSummary(true);
+    setError('');
     
-    // Simulate AI summary generation (replace with actual API call)
-    setTimeout(() => {
+    try {
+      // Generate mock summary (replace with actual AI API call later)
       const generatedSummary = generateMockSummary(notes);
       setSummary(generatedSummary);
-      localStorage.setItem(`vault-${vaultId}-summary`, generatedSummary);
+      
+      // Save summary to database
+      await vaultAPI.updateVault(vaultId, { summary: generatedSummary });
+      console.log('Summary saved successfully');
+      
+    } catch (error) {
+      console.error('Error generating/saving summary:', error);
+      setError('Failed to generate summary');
+    } finally {
       setIsGeneratingSummary(false);
-    }, 2000);
+    }
   };
 
   const generateMockSummary = (text) => {
@@ -76,13 +127,43 @@ Main themes identified from your notes. This is a simplified summary - in a real
     navigate('/home');
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="vault-page">
+        <div className="vault-loading">
+          <h2>Loading vault...</h2>
+          <button className="back-button" onClick={handleBackToHome}>
+            ← Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error && !vaultData) {
+    return (
+      <div className="vault-page">
+        <div className="vault-loading">
+          <h2>Error Loading Vault</h2>
+          <p className="error-message">{error}</p>
+          <button className="back-button" onClick={handleBackToHome}>
+            ← Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Vault not found state
   if (!vaultData) {
     return (
       <div className="vault-page">
         <div className="vault-loading">
           <h2>Vault not found</h2>
           <button className="back-button" onClick={handleBackToHome}>
-            Back to Home
+            ← Back to Home
           </button>
         </div>
       </div>
@@ -103,6 +184,10 @@ Main themes identified from your notes. This is a simplified summary - in a real
             </div>
           </div>
         </header>
+
+        {/* Error/Status Messages */}
+        {error && <div className="error-message">{error}</div>}
+        {isSaving && <div className="saving-status">Saving...</div>}
 
         <div className="vault-content">
           <div className="notes-section">
