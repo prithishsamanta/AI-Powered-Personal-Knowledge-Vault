@@ -120,52 +120,6 @@ const deleteVault = async (req, res) => {
     console.error('Delete vault error:', error);
     res.status(500).json({ message: 'Server error deleting vault' });
   }
-};
-
-// // POST /api/vaults/:id/generate-summary - Generate AI summary for vault notes
-// const generateSummary = async (req, res) => {
-//   try {
-//     const vault = await Vault.findOne({ 
-//       _id: req.params.id, 
-//       userId: req.user.userId 
-//     });
-
-//     if (!vault) {
-//       return res.status(404).json({ message: 'Vault not found' });
-//     }
-
-//     if (!vault.notes || vault.notes.trim().length === 0) {
-//       return res.status(400).json({ message: 'No notes to summarize' });
-//     }
-
-//     // Simple summary generation (replace with actual AI service)
-//     const generateMockSummary = (text) => {
-//       const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
-//       const wordCount = text.split(/\s+/).length;
-      
-//       return `Summary (${wordCount} words, ${sentences.length} sentences):
-
-// Key Points:
-// • This content covers ${sentences.length} main topics
-// • Contains approximately ${wordCount} words
-// • ${sentences.length > 3 ? 'Multiple ideas discussed' : 'Focused discussion'}
-
-// Main themes identified from your notes. This is a simplified summary - in a real application, this would use AI to generate meaningful summaries.`;
-//     };
-
-//     const generatedSummary = generateMockSummary(vault.notes);
-//     vault.summary = generatedSummary;
-//     await vault.save();
-
-//     res.json({
-//       message: 'Summary generated successfully',
-//       summary: generatedSummary
-//     });
-
-//   } catch (error) {
-//     console.error('Generate summary error:', error);
-//     res.status(500).json({ message: 'Server error generating summary' });
-//   }
-// };
+};  
 
 module.exports = { getVaults, getVaultById, createVault, updateVault, deleteVault }; 

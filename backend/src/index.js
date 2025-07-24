@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const vaultRoutes = require('./routes/vaults');
+const generateSummaryRoutes = require('./routes/generatesummary');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -16,6 +17,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/vaults', vaultRoutes);
+app.use('/api/vaults', generateSummaryRoutes);
 
 // Test route
 app.get('/api/test', (req, res) => {
