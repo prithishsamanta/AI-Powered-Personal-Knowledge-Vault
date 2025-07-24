@@ -15,19 +15,20 @@
   }
   
 .home-header {
-  margin-bottom: 3rem;
-  margin-top: 3rem;
+  margin-bottom: 2.5rem;
+  margin-top: 2rem;
 }
 
 .home-header-top {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 2rem;
+  margin-bottom: 1rem;
 }
 
 .home-welcome {
-  text-align: center;
+  text-align: left;
   flex: 1;
 }
 
@@ -35,7 +36,7 @@
   font-size: 2.5rem;
   font-weight: bold;
   color: #1e293b;
-  margin: 0 0 1rem 0;
+  margin: 0 0 0.75rem 0;
 }
   
 .intro-text {
@@ -44,8 +45,6 @@
   line-height: 1.6;
   margin: 0;
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .home-logout-button {
@@ -75,10 +74,27 @@
   
 .vaults-grid {
     display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Better layout for single vault */
+@supports selector(:has(*)) {
+  .vaults-grid:has(.vault-card:only-child) {
+    grid-template-columns: 1fr;
+    max-width: 420px;
   }
+}
+
+/* Fallback for single vault (manual class) */
+.vaults-grid.single-vault {
+  grid-template-columns: 1fr;
+  max-width: 420px;
+}
   
 .vault-card {
   background-color: white;
@@ -308,6 +324,7 @@
   
   .home-welcome {
     width: 100%;
+    text-align: center;
   }
   
   .welcome-message {

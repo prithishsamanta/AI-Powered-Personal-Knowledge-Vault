@@ -57,10 +57,9 @@ function Home() {
   }, [navigate]);
 
   const handleCardClick = async (vaultId) => {
-    try{
+    try {
       navigate(`/vault/${vaultId}`);
-    }
-    catch(error){
+    } catch (error) {
       console.error('Error loading vault:', error);
       setError(error.message || 'Failed to load vault');
     }
@@ -161,7 +160,7 @@ function Home() {
         {isLoading ? (
           <div className="loading-message">Loading your vaults...</div>
         ) : (
-          <div className="vaults-grid">
+          <div className={`vaults-grid ${vaults.length === 1 ? 'single-vault' : ''}`}>
             {vaults.length === 0 ? (
               <div className="no-vaults-message">
                 <p>No vaults yet. Create your first vault to get started!</p>
