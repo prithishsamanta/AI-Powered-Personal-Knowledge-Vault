@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { vaultAPI } from '../services/api';
+import LogoutButton from '../components/LogoutButton';
 import '../styles/Vault.css';
 
 function Vault() {
@@ -131,6 +132,7 @@ Main themes identified from your notes. This is a simplified summary - in a real
   if (isLoading) {
     return (
       <div className="vault-page">
+        <LogoutButton />
         <div className="vault-loading">
           <h2>Loading vault...</h2>
           <button className="back-button" onClick={handleBackToHome}>
@@ -145,6 +147,7 @@ Main themes identified from your notes. This is a simplified summary - in a real
   if (error && !vaultData) {
     return (
       <div className="vault-page">
+        <LogoutButton />
         <div className="vault-loading">
           <h2>Error Loading Vault</h2>
           <p className="error-message">{error}</p>
@@ -160,6 +163,7 @@ Main themes identified from your notes. This is a simplified summary - in a real
   if (!vaultData) {
     return (
       <div className="vault-page">
+        <LogoutButton />
         <div className="vault-loading">
           <h2>Vault not found</h2>
           <button className="back-button" onClick={handleBackToHome}>
@@ -172,6 +176,7 @@ Main themes identified from your notes. This is a simplified summary - in a real
 
   return (
     <div className="vault-page">
+      <LogoutButton />
       <div className="vault-container">
         <header className="vault-header">
           <div className="vault-header-content">
