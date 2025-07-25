@@ -225,6 +225,15 @@
   color: #b91c1c;
 }
 
+.edit-item {
+  color: #0369a1;
+}
+
+.edit-item:hover {
+  background-color: #f0f9ff;
+  color: #0284c7;
+}
+
 .vault-description {
   color: #64748b;
   font-size: 0.875rem;
@@ -413,4 +422,138 @@
 .no-vaults-message p {
   font-size: 1.1rem;
   margin: 0;
+}
+
+/* Edit Functionality Styles */
+.edit-title-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.edit-title-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 2px solid #3b82f6;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  background-color: white;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.edit-title-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.edit-description-container {
+  margin: 0.75rem 0;
+}
+
+.edit-description-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #3b82f6;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: #64748b;
+  background-color: white;
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.2s ease;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.edit-description-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.save-button {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.save-button:hover:not(:disabled) {
+  background-color: #059669;
+  transform: translateY(-1px);
+}
+
+.save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-button:hover:not(:disabled) {
+  background-color: #4b5563;
+  transform: translateY(-1px);
+}
+
+.cancel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments for edit functionality */
+@media (max-width: 768px) {
+  .edit-title-input {
+    font-size: 0.9rem;
+  }
+  
+  .edit-description-input {
+    font-size: 0.8rem;
+    min-height: 70px;
+  }
+  
+  .edit-buttons {
+    margin-top: 0.4rem;
+  }
+  
+  .save-button,
+  .cancel-button {
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
 } 
