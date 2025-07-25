@@ -451,23 +451,29 @@
 }
 
 .edit-description-container {
-  margin: 0.75rem 0;
+  margin: 0.25rem 0;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .edit-description-input {
-  width: 100%;
-  padding: 0.75rem;
+  flex: 1;
+  padding: 0.25rem;
   border: 2px solid #3b82f6;
   border-radius: 6px;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: #64748b;
   background-color: white;
   outline: none;
-  resize: vertical;
-  min-height: 80px;
+  resize: none;
+  min-height: 30px;
+  max-height: 30px;
   transition: border-color 0.2s ease;
   font-family: inherit;
-  line-height: 1.5;
+  line-height: 1.4;
+  box-sizing: border-box;
 }
 
 .edit-description-input:focus {
@@ -478,7 +484,10 @@
 .edit-buttons {
   display: flex;
   gap: 0.25rem;
-  margin-top: 0.5rem;
+  margin-top: 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-shrink: 0;
 }
 
 .save-button {
@@ -541,13 +550,19 @@
     font-size: 0.9rem;
   }
   
+  .edit-description-container {
+    gap: 0.4rem;
+  }
+  
   .edit-description-input {
     font-size: 0.8rem;
-    min-height: 70px;
+    min-height: 50px;
+    max-height: 50px;
+    padding: 0.5rem;
   }
   
   .edit-buttons {
-    margin-top: 0.4rem;
+    gap: 0.4rem;
   }
   
   .save-button,
