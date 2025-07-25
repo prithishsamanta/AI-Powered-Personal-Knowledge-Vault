@@ -12,6 +12,8 @@ function Home() {
   const [success, setSuccess] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editingVault, setEditingVault] = useState(null); // { vaultId, field, value }
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const navigate = useNavigate();
 
@@ -65,8 +67,59 @@ function Home() {
     }
   };
 
+  // ← Start editing vault title or description
+  const handleStartEdit = (vaultId, field) => {
+    const vault = vaults.find(v => v._id === vaultId);
+    setEditingVault({
+      vaultId,
+      field,
+      value: vault[field]
+    });
+    setDropdownOpen(null);
+    setError(''); // Clear any existing errors
+  };
+
+  // ← Cancel editing
+  const handleCancelEdit = () => {
+    setEditingVault(null);
+  };
+
+  // ← Save edited vault field
+  const handleSaveEdit = async () => {
+    if (!editingVault) return;
+
+    try {
+      setIsUpdating(true);
+      setError('');
+
+      // Update vault in database
+      await vaultAPI.updateVault(editingVault.vaultId, {
+        [editingVault.field]: editingVault.value
+      });
+
+      // Update local state
+      setVaults(vaults.map(vault => 
+        vault._id === editingVault.vaultId 
+          ? { ...vault, [editingVault.field]: editingVault.value }
+          : vault
+      ));
+
+      setEditingVault(null);
+      setSuccess(`Vault ${editingVault.field} updated successfully`);
+    } catch (error) {
+      console.error('Error updating vault:', error);
+      setError(error.message || `Failed to update vault ${editingVault.field}`);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   // ← Updated to call API
   const handleDeleteVault = async (vaultId) => {
+    if (!confirm('Are you sure you want to delete this vault? This action cannot be undone.')) {
+      return;
+    }
+
     try {
       await vaultAPI.deleteVault(vaultId);
       setVaults(vaults.filter(vault => vault._id !== vaultId));  // ← Use _id (MongoDB field)
@@ -173,30 +226,120 @@ function Home() {
                   onClick={() => handleCardClick(vault._id)}
                 >
                   <div className="card-header">
-                    <h3 className="vault-title">{vault.title}</h3>
-                    <div className="card-menu">
-                      <button
-                        className="menu-button"
-                        onClick={(e) => toggleDropdown(vault._id, e)}
-                      >
-                        ⋯
-                      </button>
-                      {dropdownOpen === vault._id && (
-                        <div className="dropdown-menu">
-                          <button
-                            className="dropdown-item delete-item"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteVault(vault._id);
-                            }}
+                    {editingVault?.vaultId === vault._id && editingVault?.field === 'title' ? (
+                      <div className="edit-title-container">
+                        <input
+                          type="text"
+                          value={editingVault.value}
+                          onChange={(e) => setEditingVault({...editingVault, value: e.target.value})}
+                          className="edit-title-input"
+                          placeholder="Enter vault title"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleSaveEdit();
+                            if (e.key === 'Escape') handleCancelEdit();
+                          }}
+                          autoFocus
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <div className="edit-buttons">
+                          <button 
+                            className="save-button" 
+                            onClick={(e) => {e.stopPropagation(); handleSaveEdit();}}
+                            disabled={isUpdating}
                           >
-                            Delete Vault
+                            {isUpdating ? '...' : '✓'}
+                          </button>
+                          <button 
+                            className="cancel-button" 
+                            onClick={(e) => {e.stopPropagation(); handleCancelEdit();}}
+                            disabled={isUpdating}
+                          >
+                            ✕
                           </button>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    ) : (
+                      <h3 className="vault-title">{vault.title}</h3>
+                    )}
+                    
+                    {!editingVault && (
+                      <div className="card-menu">
+                        <button
+                          className="menu-button"
+                          onClick={(e) => toggleDropdown(vault._id, e)}
+                        >
+                          ⋯
+                        </button>
+                        {dropdownOpen === vault._id && (
+                          <div className="dropdown-menu">
+                            <button
+                              className="dropdown-item edit-item"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleStartEdit(vault._id, 'title');
+                              }}
+                            >
+                              Edit Vault Title
+                            </button>
+                            <button
+                              className="dropdown-item edit-item"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleStartEdit(vault._id, 'description');
+                              }}
+                            >
+                              Edit Vault Description
+                            </button>
+                            <button
+                              className="dropdown-item delete-item"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteVault(vault._id);
+                              }}
+                            >
+                              Delete Vault
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <p className="vault-description">{vault.description}</p>
+                  
+                  {editingVault?.vaultId === vault._id && editingVault?.field === 'description' ? (
+                    <div className="edit-description-container">
+                      <textarea
+                        value={editingVault.value}
+                        onChange={(e) => setEditingVault({...editingVault, value: e.target.value})}
+                        className="edit-description-input"
+                        placeholder="Enter vault description"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && e.ctrlKey) handleSaveEdit();
+                          if (e.key === 'Escape') handleCancelEdit();
+                        }}
+                        autoFocus
+                        onClick={(e) => e.stopPropagation()}
+                        rows={3}
+                      />
+                      <div className="edit-buttons">
+                        <button 
+                          className="save-button" 
+                          onClick={(e) => {e.stopPropagation(); handleSaveEdit();}}
+                          disabled={isUpdating}
+                        >
+                          {isUpdating ? '...' : '✓'}
+                        </button>
+                        <button 
+                          className="cancel-button" 
+                          onClick={(e) => {e.stopPropagation(); handleCancelEdit();}}
+                          disabled={isUpdating}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="vault-description">{vault.description}</p>
+                  )}
                   <span className="last-modified">
                     Last modified: {new Date(vault.updatedAt).toLocaleDateString()}
                   </span>
