@@ -101,7 +101,7 @@ npm run dev
 
 ## 🧠 AI Integration
 
-- This project uses OpenAI's gpt-3.5-turbo model [OpenAI’s GPT API](https://platform.openai.com/) to generate automatic summaries of notes.
+- This project uses [OpenAI's gpt-3.5-turbo model](https://platform.openai.com/) to generate automatic summaries of notes.
 - Summaries are stored alongside the original note in MongoDB.
 
 ---
@@ -110,9 +110,9 @@ npm run dev
 
 **Prithish Samanta**  
 M.S. in Computer Science @ NC State University  
-[LinkedIn]([https://www.linkedin.com/in/your-profile](https://www.linkedin.com/in/prithish-samanta/))  
+[LinkedIn](https://www.linkedin.com/in/prithish-samanta/)  
 [GitHub](https://github.com/prithishsamanta)  
-[Portfolio]([https://your-portfolio.com](https://prithishsamanta.github.io/Portfolio/index.html))
+[Portfolio](https://prithishsamanta.github.io/Portfolio/index.html)
 
 ---
 
