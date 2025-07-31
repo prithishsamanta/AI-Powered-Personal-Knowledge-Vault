@@ -27,7 +27,7 @@ A secure, full-stack, cloud-based note-taking platform that uses OpenAI to autom
 
 | Layer        | Technologies                                 |
 |--------------|----------------------------------------------|
-| **Frontend** | React.js, React Router, Tailwind CSS (if used) |
+| **Frontend** | React.js, React Router                       |
 | **Backend**  | Node.js, Express                             |
 | **Database** | MongoDB Atlas, Mongoose                      |
 | **AI**       | OpenAI API (GPT-4)                           |
