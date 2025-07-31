@@ -1,4 +1,4 @@
- Ignore node modules
+# Ignore node modules
 node_modules
 
 # Ignore local logs
@@ -15,4 +15,3 @@ dist
 
 # Ignore environment files (if you don't want them in image)
 .env
-.vite
