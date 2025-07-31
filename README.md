@@ -101,7 +101,7 @@ npm run dev
 
 ## 🧠 AI Integration
 
-- This project uses OpenAI's gpt-3.5-turbo model to generate automatic summaries of notes - (https://platform.openai.com/) .
+- This project uses OpenAI's gpt-4o model to generate automatic summaries of notes - (https://platform.openai.com/) .
 - Summaries are stored alongside the original note in MongoDB.
 
 ---

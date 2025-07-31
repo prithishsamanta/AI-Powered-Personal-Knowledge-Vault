@@ -25,7 +25,7 @@ const generateSummary = async (req, res) => {
         "If in case the you feel that the summary can include some more details please add that too" + text;
 
         const response = await client.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o",
             messages: [
                 {
                     role: "system", 
