@@ -1,0 +1,17 @@
+# Ignore node modules
+node_modules
+
+# Ignore local logs
+*.log
+
+# Ignore system files
+.DS_Store
+
+# Ignore git repo
+.git
+
+# Ignore build outputs (for frontend)
+dist
+
+# Ignore environment files (if you don't want them in image)
+.env
