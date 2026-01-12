@@ -10,20 +10,20 @@ A secure, full-stack, cloud-based note-taking platform that uses OpenAI to autom
 
 ---
 
-## 🚀 Features
+##  Features
 
-- ✍️ Create, edit, and organize notes into folders/tabs
-- 🤖 One-click AI summarization using OpenAI GPT
-- 🔒 User authentication (Sign up / Log in with JWT)
-- 🌐 Cross-device access with cloud data sync
-- 📦 MongoDB Atlas for persistent storage
-- ☁️ Optional support for file uploads (PDFs, images)
-- ⚙️ Real-time note saving with full-text search
-- 🛡️ Secure backend with hashed credentials and token-based auth
+-  Create, edit, and organize notes into folders/tabs
+-  One-click AI summarization using OpenAI GPT
+-  User authentication (Sign up / Log in with JWT)
+-  Cross-device access with cloud data sync
+-  MongoDB Atlas for persistent storage
+-  Optional support for file uploads (PDFs, images)
+-  Real-time note saving with full-text search
+-  Secure backend with hashed credentials and token-based auth
 
 ---
 
-## 🧱 Tech Stack
+##  Tech Stack
 
 | Layer        | Technologies                                 |
 |--------------|----------------------------------------------|
@@ -32,17 +32,12 @@ A secure, full-stack, cloud-based note-taking platform that uses OpenAI to autom
 | **Database** | MongoDB Atlas, Mongoose                      |
 | **AI**       | OpenAI API (GPT-4)                           |
 | **Security** | JWT, bcryptjs                                |
-| **DevOps**   | Docker, GitHub Actions (CI/CD)               |
+| **DevOps**   | Docker              |
+
 
 ---
 
-## 📸 Screenshots
-
-_coming soon_
-
----
-
-## 🔧 Local Setup
+##  Local Setup
 
 ### 1. Clone the Repository
 
@@ -82,7 +77,7 @@ npm run dev
 
 ---
 
-## 🌐 API Endpoints
+##  API Endpoints
 
 > All protected routes require an `Authorization: Bearer <token>` header.
 
@@ -99,14 +94,14 @@ npm run dev
 
 ---
 
-## 🧠 AI Integration
+##  AI Integration
 
 - This project uses OpenAI's gpt-4o model to generate automatic summaries of notes - (https://platform.openai.com/) .
 - Summaries are stored alongside the original note in MongoDB.
 
 ---
 
-## ✍️ Author
+##  Author
 
 **Prithish Samanta**  
 M.S. in Computer Science @ NC State University  
@@ -116,12 +111,12 @@ M.S. in Computer Science @ NC State University
 
 ---
 
-## 📄 License
+##  License
 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## 🌟 Contributions
+##  Contributions
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
